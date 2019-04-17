@@ -3,7 +3,7 @@
     <h1>{{ msg }}</h1>
     <p>
       Are you ready for a quiz?
-      <button><router-link to="/quiz">start quiz</router-link></button>
+      <button v-on:click="fetch"><router-link to="/quiz">start quiz</router-link></button>
     </p>
   </div>
 </template>
