@@ -5,16 +5,14 @@
     <div id="progress-bar">
       <div v-bind:style="{width: progress + '%'}"></div>
     </div>
-    <!-- show questions when thay are loaded from api and the user not passed all questions -->
+    <!-- show questions when they are loaded from api and the user not passed all questions -->
     <div v-if="questions && currentQuestionIndex < questions.length">
       <h3> {{ questions[currentQuestionIndex].question }}</h3>
-        <button v-on:click="submitCorrectAnswer" >
-          {{ questions[currentQuestionIndex].correct_answer }}
-        </button>
-        <button v-on:click="showNextQuestion"
-                v-for="incorrectAnswer in questions[currentQuestionIndex].incorrect_answers"
-                :key="incorrectAnswer">
-          {{ incorrectAnswer }}
+        <!-- submit answer -->
+        <button v-on:click="submitAnswer(answer)"
+                v-for="answer in questions[currentQuestionIndex].answers"
+                :key="answer">
+          {{ answer }}
         </button>
     </div>
     <!-- show final page when questions have been loaded from api and user passed all questions -->
@@ -39,22 +37,27 @@ export default {
     };
   },
   methods: {
+    submitAnswer(answer) {
+      if (answer === this.questions[this.currentQuestionIndex].correct_answer) {
+        this.points += 1;
+        console.log(`correct ${this.points}`);
+      }
+      this.showNextQuestion();
+    },
     showNextQuestion() {
       if (this.currentQuestionIndex < this.questions.length) {
         this.currentQuestionIndex += 1;
         this.hitProgress();
       }
     },
-    submitCorrectAnswer() {
-      this.points += 1;
-      console.log(`correct ${this.points}`);
-      this.showNextQuestion();
-    },
     reset() {
       this.$router.go();
     },
     hitProgress() {
       this.progress += 10;
+    },
+    getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
     },
   },
   // method which starts when component is created on the page
@@ -63,7 +66,15 @@ export default {
       .then(response => response.json())
       .then((questions) => {
         console.log(JSON.stringify(questions.results));
-        this.questions = questions.results;
+        this.questions = questions.results.map((question) => {
+          const newQuestion = question;
+          // copy incorrect answers into answers array
+          newQuestion.answers = question.incorrect_answers.concat();
+          const randomIndex = this.getRandomInt(0, question.incorrect_answers.length);
+          // insert correct answer in random place
+          newQuestion.answers.splice(randomIndex, 0, question.correct_answer);
+          return newQuestion;
+        });
       });
   },
 };
