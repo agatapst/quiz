@@ -3,7 +3,7 @@
     <h1>{{ msg }}</h1>
     <p>
       Are you ready for a quiz?
-      <button v-on:click="fetch"><router-link to="/quiz">start quiz</router-link></button>
+      <button><router-link to="/quiz">start quiz</router-link></button>
     </p>
   </div>
 </template>
@@ -31,6 +31,6 @@ li {
   margin: 0 10px;
 }
 a {
-  color: #42b983;
+  color: #4E73B9;
 }
 </style>

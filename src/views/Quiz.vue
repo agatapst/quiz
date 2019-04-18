@@ -1,9 +1,13 @@
 <template>
   <div class="container" id="app">
-    <!-- <img alt="Boy with questionmark" src=""> -->
     <h1 class="quiz-header">Quiz</h1>
-      <h3 v-if="questions">{{ questions[currentQuestionIndex].question }}</h3>
-      <div v-if="questions">
+    <!-- progress bar -->
+    <div id="progress-bar">
+      <div v-bind:style="{width: progress + '%'}"></div>
+    </div>
+    <!-- show questions when thay are loaded from api and the user not passed all questions -->
+    <div v-if="questions && currentQuestionIndex < questions.length">
+      <h3> {{ questions[currentQuestionIndex].question }}</h3>
         <button v-on:click="submitCorrectAnswer" >
           {{ questions[currentQuestionIndex].correct_answer }}
         </button>
@@ -12,11 +16,13 @@
                 :key="incorrectAnswer">
           {{ incorrectAnswer }}
         </button>
-      </div>
-      <div v-if="questions === null">
-        <h3>Your points: {{ points }} </h3>
-        <button v-on:click="reset">Try again</button>
-      </div>
+    </div>
+    <!-- show final page when questions have been loaded from api and user passed all questions -->
+    <div v-if="questions && currentQuestionIndex === questions.length">
+      <img class="done-img" alt="Happy girl putting her hands up" src="../assets/done.png">
+      <h3>Your points: {{ points }} </h3>
+      <button v-on:click="reset">try again</button>
+    </div>
   </div>
 </template>
 
@@ -29,15 +35,14 @@ export default {
       questions: null,
       currentQuestionIndex: 0,
       points: 0,
+      progress: 0,
     };
   },
   methods: {
     showNextQuestion() {
-      if (this.currentQuestionIndex < this.questions.length - 1) {
+      if (this.currentQuestionIndex < this.questions.length) {
         this.currentQuestionIndex += 1;
-      } else {
-        this.questions = null;
-        console.log('no question');
+        this.hitProgress();
       }
     },
     submitCorrectAnswer() {
@@ -46,7 +51,10 @@ export default {
       this.showNextQuestion();
     },
     reset() {
-      this.points = 0;
+      this.$router.go();
+    },
+    hitProgress() {
+      this.progress += 10;
     },
   },
   // method which starts when component is created on the page
@@ -62,4 +70,21 @@ export default {
 </script>
 
 <style lang="scss">
+#progress-bar {
+    width: 300px;
+    border: 1px solid #4E73B9;
+    margin: 0 auto 20px auto;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+#progress-bar div {
+    height: 20px;
+    background: #4E73B9;
+}
+
+.done-img {
+  width: 300px;
+  height: 400px;
+}
 </style>
