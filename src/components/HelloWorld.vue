@@ -1,10 +1,8 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <p>
-      Are you ready for a quiz?
-      <button><router-link to="/quiz">start quiz</router-link></button>
-    </p>
+    <h2>Are you ready for a quiz?</h2>
+    <button><router-link to="/quiz">start quiz</router-link></button>
   </div>
 </template>
 

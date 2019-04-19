@@ -1,21 +1,28 @@
 <template>
   <div class="container" id="app">
     <h1 class="quiz-header">Quiz</h1>
+    <h4>Click the correct answer</h4>
 
-    <!-- progress bar -->
-    <div id="progress-bar">
-      <div v-bind:style="{width: progress + '%'}"></div>
+    <!-- loading image -->
+    <div v-if="questions === null">
+      <img class="loading-img" alt="loading" src="../assets/loading.svg">
     </div>
 
     <!-- show questions when they are loaded from api and the user not passed all questions -->
     <div v-if="questions && currentQuestionIndex < questions.length">
+      <!-- progress bar -->
+      <div id="progress-bar">
+        <div v-bind:style="{width: progress + '%'}"></div>
+      </div>
       <h3> {{ questions[currentQuestionIndex].question }}</h3>
         <!-- submit answer -->
-        <button v-on:click="submitAnswer(answer)"
+      <section class="answers">
+        <button class="answer" v-on:click="submitAnswer(answer)"
                 v-for="answer in questions[currentQuestionIndex].answers"
                 :key="answer">
           {{ answer }}
         </button>
+      </section>
     </div>
 
     <!-- show final page when questions have been loaded from api and user passed all questions -->
@@ -127,8 +134,23 @@ export default {
     background: #4E73B9;
 }
 
+.answers {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.answer {
+  font-size: 15px;
+  border: 1px solid #4E73B9;
+  margin: 10px 500px;
+  padding: 20px;
+  cursor: pointer;
+}
+
 .done-img {
-  width: 300px;
+  width: 350px;
   height: 400px;
 }
 </style>
