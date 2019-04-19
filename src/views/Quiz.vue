@@ -11,8 +11,8 @@
     <!-- show questions when they are loaded from api and the user not passed all questions -->
     <div v-if="questions && currentQuestionIndex < questions.length">
       <!-- progress bar -->
-      <div id="progress-bar">
-        <div v-bind:style="{width: progress + '%'}"></div>
+      <div class="progress-bar">
+        <div class="progress-bar-element" v-bind:style="{width: progress + '%'}"></div>
       </div>
       <!-- question -->
       <h3 v-html="questions[currentQuestionIndex].question"></h3>
@@ -122,17 +122,18 @@ export default {
 </script>
 
 <style lang="scss">
-#progress-bar {
+.progress-bar {
     width: 300px;
     border: 1px solid #4E73B9;
     margin: 0 auto 20px auto;
     border-radius: 30px;
     overflow: hidden;
-}
 
-#progress-bar div {
-    height: 20px;
-    background: #4E73B9;
+    .progress-bar-element {
+      height: 20px;
+      background: #4E73B9;
+      transition: width 0.2s ease-in;
+    }
 }
 
 .answers {
@@ -140,14 +141,25 @@ export default {
   text-align: center;
   justify-content: center;
   flex-direction: column;
-}
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
 
-.answer {
-  font-size: 15px;
-  border: 1px solid #4E73B9;
-  margin: 10px 500px;
-  padding: 20px;
-  cursor: pointer;
+  .answer {
+    width: 100%;
+    font-size: 15px;
+    border: 1px solid #4E73B9;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 20px;
+    cursor: pointer;
+    background: #ffffff;
+    transition: background-color 0.3s ease-in;
+
+    &:hover {
+      background: #4E73B9;
+    }
+  }
 }
 
 .done-img {

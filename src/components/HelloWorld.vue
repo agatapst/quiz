@@ -2,7 +2,7 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
     <h2>Are you ready for a quiz?</h2>
-    <button><router-link to="/quiz">start quiz</router-link></button>
+    <button class="start"><router-link to="/quiz">start</router-link></button>
   </div>
 </template>
 
@@ -28,7 +28,20 @@ li {
   display: inline-block;
   margin: 0 10px;
 }
+
 a {
-  color: #4E73B9;
+  color: #2c3e50;
+  text-decoration: none;
+}
+
+.start {
+  text-transform: uppercase;
+  font-size: 20px;
+  border: 1px solid #4E73B9;
+  outline: none;
+  padding: 20px;
+    &:hover {
+    background: #4E73B9;
+  }
 }
 </style>

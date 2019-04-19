@@ -10,6 +10,12 @@
 </template>
 
 <style lang="scss">
+body {
+  background-image: url("./assets/cool-background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
