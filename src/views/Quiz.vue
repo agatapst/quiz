@@ -14,13 +14,14 @@
       <div id="progress-bar">
         <div v-bind:style="{width: progress + '%'}"></div>
       </div>
-      <h3> {{ questions[currentQuestionIndex].question }}</h3>
-        <!-- submit answer -->
+      <!-- question -->
+      <h3 v-html="questions[currentQuestionIndex].question"></h3>
+      <!-- submit answer -->
       <section class="answers">
         <button class="answer" v-on:click="submitAnswer(answer)"
                 v-for="answer in questions[currentQuestionIndex].answers"
+                v-html="answer"
                 :key="answer">
-          {{ answer }}
         </button>
       </section>
     </div>
